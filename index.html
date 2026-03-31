@@ -263,6 +263,20 @@
             overflow: hidden;
         }
 
+        .card-compact {
+            padding: 20px;
+            border-radius: 18px;
+        }
+
+        .card-compact h2 {
+            font-size: 1.2rem;
+        }
+
+        .card-compact p {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
         .card::before {
             content: '';
             position: absolute;
@@ -633,7 +647,7 @@
             }
 
             grid.innerHTML = filtered.length ? filtered.map(app => `
-                <div class="card">
+                <div class="card ${currentTab === 'downloads' ? 'card-compact' : ''}">
                     <h2>${app.name}</h2>
                     <p>${app.desc}</p>
                     <div class="card-footer">
@@ -641,8 +655,8 @@
                         ${app.type ? `<span class="badge" style="background: rgba(99, 102, 241, 0.1); color: #818cf8;">${app.type}</span>` : ''}
                         ${app.deploy ? `<span class="badge">${app.deploy}</span>` : ''}
                     </div>
-                    <div class="card-actions">
-                        <a href="${app.url}" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Open App ↗</a>
+                    <div class="card-actions" style="${currentTab === 'downloads' ? 'justify-content: flex-end;' : ''}">
+                        ${currentTab !== 'downloads' ? `<a href="${app.url}" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Open App ↗</a>` : ''}
                         ${app.downloadUrl ? `
                             <button onclick="handleDownload('${app.downloadUrl}', '${app.name}')" class="get-btn" style="border:none; cursor:pointer;">GET</button>
                         ` : ''}
