@@ -8,26 +8,34 @@
     "type": "Web App"
   },
   {
-    "name": "Upload Portal",
-    "desc": "Simple way for clients to send files",
-    "url": "https://upload.yourdomain.com",
+    "name": "Lucky Ball Score Calculate",
+    "desc": "Easy way to Record Lucky Ball Score",
+    "url": "https://ryanxanta.github.io/luckyCalculator/",
     "status": "Demo",
-    "deploy": "Render",
+    "deploy": "GitHub",
     "type": "Web App"
   },
   {
-    "name": "Warehouse System",
-    "desc": "Stock and picking management",
-    "url": "#",
-    "status": "Coming Soon",
-    "deploy": "Local",
+    "name": "Inventory Register",
+    "desc": "Let user Scan And register Stock Item Type & QTY",
+    "url": "https://ryanxanta.github.io/inventoryregister/",
+    "status": "Demo",
+    "deploy": "GitHub",
     "type": "Web App"
   },
   {
-    "name": "Portfolio Page",
-    "desc": "My personal landing page and project showcase.",
-    "url": "https://portfolio.yourdomain.com",
-    "status": "Live",
+    "name": "Plumbing Page",
+    "desc": "Let user Scan And register Stock Item Type & QTY",
+    "url": "https://ryanxanta.github.io/page001/",
+    "status": "Demo",
+    "deploy": "GitHub",
+    "type": "Web App"
+  },
+  {
+    "name": "property_profile",
+    "desc": "Property Landing Page Sample.",
+    "url": "https://ryanxanta.github.io/property_profile/",
+    "status": "Demo",
     "deploy": "GitHub",
     "type": "Web Page"
   }
