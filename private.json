@@ -4,13 +4,23 @@
     "desc": "Direct access to backend databases and logs.",
     "url": "https://admin.private-system.com",
     "status": "Active",
-    "deploy": "AWS"
+    "deploy": "AWS",
+    "type": "Web App"
   },
   {
-    "name": "Finanical Vault",
+    "name": "Financial Vault",
     "desc": "Confidential financial records and reports.",
     "url": "https://vault.private-system.com",
     "status": "Secure",
-    "deploy": "Self-Hosted"
+    "deploy": "Self-Hosted",
+    "type": "Web App"
+  },
+  {
+    "name": "Internal Docs",
+    "desc": "Private documentation for system architecture.",
+    "url": "https://docs.private-system.com",
+    "status": "Active",
+    "deploy": "Vercel",
+    "type": "Web Page"
   }
 ]
