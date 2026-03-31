@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Secret Admin Tool",
+    "desc": "Direct access to backend databases and logs.",
+    "url": "https://admin.private-system.com",
+    "status": "Active",
+    "deploy": "AWS"
+  },
+  {
+    "name": "Finanical Vault",
+    "desc": "Confidential financial records and reports.",
+    "url": "https://vault.private-system.com",
+    "status": "Secure",
+    "deploy": "Self-Hosted"
+  }
+]

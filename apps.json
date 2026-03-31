@@ -1,0 +1,23 @@
+[
+    {
+      "name": "Support Ticket",
+      "desc": "Keep track of customer issues without losing anything",
+      "url": "https://support-ticket-system-wnx6.onrender.com/",
+      "status": "Demo",
+      "deploy": "Render"
+    },
+    {
+      "name": "Upload Portal",
+      "desc": "Simple way for clients to send files",
+      "url": "https://upload.yourdomain.com",
+      "status": "Demo",
+      "deploy": "Render"
+    },
+    {
+      "name": "Warehouse System",
+      "desc": "Stock and picking management",
+      "url": "#",
+      "status": "Coming Soon",
+      "deploy": "Local"
+    }
+  ]
