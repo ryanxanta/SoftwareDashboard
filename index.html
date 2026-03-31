@@ -154,6 +154,86 @@
             border-color: var(--primary);
         }
 
+        /* --- Download Link --- */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            transition: 0.3s;
+            padding: 8px 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .download-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Card Actions --- */
+        .card-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .get-btn {
+            background: var(--primary);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        .get-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+        }
+
+        /* --- Memos --- */
+        .memo-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--primary);
+            padding: 25px;
+            border-radius: 0 20px 20px 0;
+            margin-bottom: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memo-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--secondary);
+            transform: translateX(10px);
+        }
+
+        .memo-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .memo-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -341,6 +421,8 @@
 
         <div class="tabs">
             <button class="tab-btn active" id="demoTabBtn" onclick="switchTab('demo')">Public Demos</button>
+            <button class="tab-btn" id="downloadsTabBtn" onclick="switchTab('downloads')">Downloads</button>
+            <button class="tab-btn" id="memosTabBtn" onclick="switchTab('memos')">Memos</button>
             <button class="tab-btn" id="privateTabBtn" onclick="switchTab('private')">Private Tools</button>
         </div>
 
@@ -348,7 +430,7 @@
             <input type="text" id="searchInput" placeholder="Find an application..." oninput="handleSearch()">
         </div>
 
-        <div class="filters">
+        <div class="filters" id="filterContainer">
             <button class="filter-chip active" onclick="setFilter('all', this)">All</button>
             <button class="filter-chip" onclick="setFilter('Web App', this)">Web Apps</button>
             <button class="filter-chip" onclick="setFilter('Web Page', this)">Web Pages</button>
@@ -370,8 +452,21 @@
             <button onclick="verifyPassword()">Unlock Access</button>
             <p id="passwordError" style="color: var(--secondary); margin-top: 15px; display: none;">Incorrect password.
                 Try again.</p>
-            <button onclick="closeModal()"
+            <button onclick="closeModal('passwordModal')"
                 style="background: transparent; color: var(--text-muted); margin-top: 10px; font-weight: 400;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Memo Modal -->
+    <div class="modal-overlay" id="memoModal">
+        <div class="modal" style="max-width: 600px; text-align: left;">
+            <h2 id="modalMemoTitle"
+                style="margin-bottom: 15px; background: linear-gradient(to right, #818cf8, #f472b6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                Memo Title</h2>
+            <div id="modalMemoContent"
+                style="color: var(--text-main); line-height: 1.8; font-size: 1.1rem; margin-bottom: 30px; white-space: pre-wrap;">
+                Memo content goes here...</div>
+            <button onclick="closeModal('memoModal')">Close Window</button>
         </div>
     </div>
 
@@ -379,6 +474,8 @@
         let currentTab = 'demo';
         let currentType = 'all';
         let demoApps = [];
+        let downloadsApps = [];
+        let memos = [];
         let privateApps = [];
         let isPrivateUnlocked = false;
 
@@ -389,6 +486,12 @@
             loadApps('apps.json', (data) => {
                 demoApps = data;
                 renderApps(demoApps);
+            });
+            loadApps('downloads.json', (data) => {
+                downloadsApps = data;
+            });
+            loadApps('memos.json', (data) => {
+                memos = data;
             });
         };
 
@@ -443,13 +546,26 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`${tab}TabBtn`).classList.add('active');
 
+            // Hide/Show Filters
+            const filterContainer = document.getElementById('filterContainer');
+            if (filterContainer) {
+                filterContainer.style.display = (tab === 'demo' || tab === 'private') ? 'flex' : 'none';
+            }
+
             currentTab = tab;
             const grid = document.getElementById('appGrid');
             grid.classList.remove('visible');
 
             setTimeout(() => {
-                renderApps(tab === 'demo' ? demoApps : privateApps);
-                grid.classList.add('visible');
+                loadApps(tab === 'memos' ? 'memos.json' : (tab === 'downloads' ? 'downloads.json' : (tab === 'private' ? 'private.json' : 'apps.json')), (data) => {
+                    if (tab === 'demo') demoApps = data;
+                    else if (tab === 'downloads') downloadsApps = data;
+                    else if (tab === 'memos') memos = data;
+                    else if (tab === 'private') privateApps = data;
+
+                    renderApps(data);
+                    grid.classList.add('visible');
+                });
             }, 300);
         }
 
@@ -459,7 +575,7 @@
 
             if (input === PASSWORD_KEY) {
                 isPrivateUnlocked = true;
-                closeModal();
+                closeModal('passwordModal');
                 loadApps('private.json', (data) => {
                     privateApps = data;
                     switchTab('private');
@@ -470,10 +586,20 @@
             }
         }
 
-        function closeModal() {
-            document.getElementById('passwordModal').style.display = 'none';
-            document.getElementById('passwordInput').value = '';
-            document.getElementById('passwordError').style.display = 'none';
+        function openMemoModal(index) {
+            const memo = memos[index];
+            if (!memo) return;
+            document.getElementById('modalMemoTitle').innerText = memo.title;
+            document.getElementById('modalMemoContent').innerText = memo.content;
+            document.getElementById('memoModal').style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+            if (id === 'passwordModal') {
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordError').style.display = 'none';
+            }
         }
 
         function setFilter(type, el) {
@@ -488,14 +614,26 @@
             const search = document.getElementById('searchInput').value.toLowerCase();
 
             const filtered = apps.filter(app => {
-                const matchesSearch = app.name.toLowerCase().includes(search) ||
-                    app.desc.toLowerCase().includes(search);
-                const matchesType = currentType === 'all' || app.type === currentType;
+                const title = app.name || app.title || "";
+                const desc = app.desc || app.content || "";
+                const matchesSearch = title.toLowerCase().includes(search) ||
+                    desc.toLowerCase().includes(search);
+                const matchesType = (currentType === 'all' || currentTab === 'memos' || app.type === currentType);
                 return matchesSearch && matchesType;
             });
 
+            if (currentTab === 'memos') {
+                grid.innerHTML = filtered.length ? filtered.map((memo, idx) => `
+                    <div class="memo-card" onclick="openMemoModal(${idx})">
+                        <h3>${memo.title}</h3>
+                        <p>${memo.content}</p>
+                    </div>
+                `).join('') : `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No memos found matching your criteria.</div>`;
+                return;
+            }
+
             grid.innerHTML = filtered.length ? filtered.map(app => `
-                <a href="${app.url}" target="_blank" class="card">
+                <div class="card">
                     <h2>${app.name}</h2>
                     <p>${app.desc}</p>
                     <div class="card-footer">
@@ -503,12 +641,35 @@
                         ${app.type ? `<span class="badge" style="background: rgba(99, 102, 241, 0.1); color: #818cf8;">${app.type}</span>` : ''}
                         ${app.deploy ? `<span class="badge">${app.deploy}</span>` : ''}
                     </div>
-                </a>
+                    <div class="card-actions">
+                        <a href="${app.url}" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Open App ↗</a>
+                        ${app.downloadUrl ? `
+                            <button onclick="handleDownload('${app.downloadUrl}', '${app.name}')" class="get-btn" style="border:none; cursor:pointer;">GET</button>
+                        ` : ''}
+                    </div>
+                </div>
             `).join('') : `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No applications found matching your criteria.</div>`;
         }
 
+        function handleDownload(url, name) {
+            if (url.startsWith('http')) {
+                window.open(url, '_blank');
+            } else {
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
         function handleSearch() {
-            renderApps(currentTab === 'demo' ? demoApps : privateApps);
+            let targetData = demoApps;
+            if (currentTab === 'downloads') targetData = downloadsApps;
+            else if (currentTab === 'memos') targetData = memos;
+            else if (currentTab === 'private') targetData = privateApps;
+            renderApps(targetData);
         }
     </script>
 </body>
