@@ -124,7 +124,36 @@
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
 
-        /* --- App Grid --- */
+        /* --- Filter Chips --- */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .filter-chip:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .filter-chip.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-color: var(--primary);
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -319,6 +348,12 @@
             <input type="text" id="searchInput" placeholder="Find an application..." oninput="handleSearch()">
         </div>
 
+        <div class="filters">
+            <button class="filter-chip active" onclick="setFilter('all', this)">All</button>
+            <button class="filter-chip" onclick="setFilter('Web App', this)">Web Apps</button>
+            <button class="filter-chip" onclick="setFilter('Web Page', this)">Web Pages</button>
+        </div>
+
         <div class="grid visible" id="appGrid">
             <!-- Apps will be rendered here -->
         </div>
@@ -342,6 +377,7 @@
 
     <script>
         let currentTab = 'demo';
+        let currentType = 'all';
         let demoApps = [];
         let privateApps = [];
         let isPrivateUnlocked = false;
@@ -439,14 +475,23 @@
             document.getElementById('passwordError').style.display = 'none';
         }
 
+        function setFilter(type, el) {
+            currentType = type;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            handleSearch();
+        }
+
         function renderApps(apps) {
             const grid = document.getElementById('appGrid');
             const search = document.getElementById('searchInput').value.toLowerCase();
 
-            const filtered = apps.filter(app =>
-                app.name.toLowerCase().includes(search) ||
-                app.desc.toLowerCase().includes(search)
-            );
+            const filtered = apps.filter(app => {
+                const matchesSearch = app.name.toLowerCase().includes(search) ||
+                    app.desc.toLowerCase().includes(search);
+                const matchesType = currentType === 'all' || app.type === currentType;
+                return matchesSearch && matchesType;
+            });
 
             grid.innerHTML = filtered.length ? filtered.map(app => `
                 <a href="${app.url}" target="_blank" class="card">
@@ -454,10 +499,11 @@
                     <p>${app.desc}</p>
                     <div class="card-footer">
                         <span class="badge ${currentTab === 'private' ? 'status-private' : 'status-demo'}">${app.status}</span>
+                        ${app.type ? `<span class="badge" style="background: rgba(99, 102, 241, 0.1); color: #818cf8;">${app.type}</span>` : ''}
                         ${app.deploy ? `<span class="badge">${app.deploy}</span>` : ''}
                     </div>
                 </a>
-            `).join('') : `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No applications found matching your search.</div>`;
+            `).join('') : `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No applications found matching your criteria.</div>`;
         }
 
         function handleSearch() {
