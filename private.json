@@ -1,26 +1,18 @@
 [
   {
-    "name": "Secret Admin Tool",
-    "desc": "Direct access to backend databases and logs.",
-    "url": "https://admin.private-system.com",
+    "name": "OpenClaw",
+    "desc": "Direct access OpenClaw HomeServer.",
+    "url": "https://openclaw.techseven.dpdns.org/chat?session=agent%3Amain%3Amain",
     "status": "Active",
-    "deploy": "AWS",
+    "deploy": "HomeServer",
     "type": "Web App"
   },
   {
-    "name": "Financial Vault",
-    "desc": "Confidential financial records and reports.",
-    "url": "https://vault.private-system.com",
+    "name": "Proxmox",
+    "desc": "Direct access Proxmox HomeServer.",
+    "url": "https://proxmox.techseven.dpdns.org/",
     "status": "Secure",
     "deploy": "Self-Hosted",
     "type": "Web App"
-  },
-  {
-    "name": "Internal Docs",
-    "desc": "Private documentation for system architecture.",
-    "url": "https://docs.private-system.com",
-    "status": "Active",
-    "deploy": "Vercel",
-    "type": "Web Page"
   }
 ]
