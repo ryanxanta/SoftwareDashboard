@@ -33,8 +33,16 @@
   },
   {
     "name": "property_profile",
-    "desc": "Property Landing Page Sample.",
+    "desc": "Property Profile Page Sample.",
     "url": "https://ryanxanta.github.io/property_profile/",
+    "status": "Demo",
+    "deploy": "GitHub",
+    "type": "Web Page"
+  },
+  {
+    "name": "property_Landing",
+    "desc": "Property Landing Page Sample.",
+    "url": "https://ryanxanta.github.io/property-landing/",
     "status": "Demo",
     "deploy": "GitHub",
     "type": "Web Page"
