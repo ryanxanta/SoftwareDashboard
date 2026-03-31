@@ -1,0 +1,34 @@
+[
+    {
+        "name": "SQL Accounting Download link",
+        "desc": "Version b9893",
+        "url": "https://www.sql.com.my/download/prerelease/setup-b9893.exe",
+        "status": "Ready",
+        "type": "Download link",
+        "downloadUrl": "https://download.sql.com.my/prerelease/setup-b9893.exe"
+    },
+    {
+        "name": "SQL Payroll Download link",
+        "desc": "Version 5239",
+        "url": "https://www.sql.com.my/download/payroll/setup-5239.exe",
+        "status": "Stable",
+        "type": "Download link",
+        "downloadUrl": "https://download.sql.com.my/payroll/setup-5239.exe"
+    },
+    {
+        "name": "SQL Accounting X-Store",
+        "desc": "Version 1.0.0",
+        "url": "https://x-store.sql.com.my/login",
+        "status": "Stable",
+        "type": "Download link",
+        "downloadUrl": "https://x-store.sql.com.my/login"
+    },
+    {
+        "name": "SQL Accounting X-Store Demo",
+        "desc": "Version 1.0.0",
+        "url": "https://x-store-demo.sql.com.my/login",
+        "status": "Stable",
+        "type": "Download link",
+        "downloadUrl": "https://x-store-demo.sql.com.my/login"
+    }
+]

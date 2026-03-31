@@ -1,0 +1,10 @@
+[
+    {
+        "title": "Autocount SQL Server Password",
+        "content": "Server: SQL-SERVER\nUser: administrator\nPassword: oCt2005-ShenZhou6_A2006"
+    },
+    {
+        "title": "SQL Auto shutdown when export PDF or print",
+        "content": "C:\\eStream\\SQLAccounting\\bin\\firebird\\msvcp140.dll\nRename  msvcp140.dll to others name\nEg , from msvcp140.dll change to msvcp141.dll\n \nSame for SQL Payroll"
+    }
+]
