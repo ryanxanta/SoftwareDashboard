@@ -393,7 +393,8 @@
         };
 
         function loadApps(file, callback) {
-            fetch(file)
+            const cacheBuster = `?t=${new Date().getTime()}`;
+            fetch(file + cacheBuster, { cache: 'no-cache' })
                 .then(res => {
                     if (!res.ok) throw new Error("File not found");
                     return res.json();
