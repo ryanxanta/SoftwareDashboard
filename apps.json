@@ -52,7 +52,7 @@
     "desc": "Username : admin Password : 123456",
     "url": "https://demo.nightcat.asia/page/admin/index.php",
     "status": "Demo",
-    "deploy": "Vendor",
+    "deploy": "NightCat",
     "type": "Web App"
   }
 ]
