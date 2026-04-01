@@ -46,5 +46,13 @@
     "status": "Demo",
     "deploy": "GitHub",
     "type": "Web Page"
+  },
+  {
+    "name": "Direct Sales Program",
+    "desc": "Username : admin Password : 123456",
+    "url": "https://demo.nightcat.asia/page/admin/index.php",
+    "status": "Demo",
+    "deploy": "Vendor",
+    "type": "Web App"
   }
 ]
